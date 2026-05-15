@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Гаражи и чуланы — блошиный рынок Темрюка</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Шрифт -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #f5f5f5;
+            --card-bg: #ffffff;
+            --border: #e0e0e0;
+            --text-main: #1e1e1e;
+            --text-muted: #757575;
+            --accent: #2a8cff;
+            --accent-hover: #1f6ecc;
+            --price: #008000;
+            /* Бренд‑цвета мессенджеров */
+            --wa: #25D366;   /* WhatsApp green [web:151] */
+            --tg: #229ED9;   /* Telegram blue [web:153] */
+            --max: #5C6BC0;  /* MAX – условный фиолетово‑синий */
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: "Roboto", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+        }
+
+        a { color: inherit; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* Шапка */
+
+        .header {
+            background-color: #ffffff;
+            border-bottom: 1px solid var(--border);
+            padding: 8px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .header-inner {
+            max-width: 1160px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--accent);
+            white-space: nowrap;
+        }
+
+        .city {
+            font-size: 13px;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .search {
+            flex: 1;
+            min-width: 200px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .search input {
+            flex: 1;
+            padding: 8px 10px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        .search button {
+            padding: 8px 14px;
+            border-radius: 4px;
+            border: none;
+            background-color: var(--accent);
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .search button:hover { background-color: var(--accent-hover); }
+
+        .top-buttons {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        #toggle-edit,
+        #save-changes,
+        #add-item {
+            padding: 6px 10px;
+            font-size: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        #toggle-edit {
+            border: 1px solid var(--border);
+            background-color: #fffdf0;
+        }
+        #toggle-edit:hover { background-color: #fff7d1; }
+
+        #save-changes {
+            border: 1px solid var(--accent);
+            background-color: #e6f1ff;
+            color: var(--accent);
+        }
+        #save-changes:hover { background-color: #d4e7ff; }
+
+        #add-item {
+            border: 1px solid #4caf50;
+            background-color: #e6f8e6;
+            color: #2e7d32;
+        }
+        #add-item:hover { background-color: #d3f0d3; }
+
+        @media (max-width: 480px) {
+            .city {
+                flex-basis: 100%;
+            }
+            .logo {
+                font-size: 16px;
+            }
+        }
+
+        /* HERO */
+
+        .hero {
+            background-color: #ffffff;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero-inner {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 16px 16px 12px;
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(0, 1.4fr);
+            gap: 24px;
+        }
+
+        @media (max-width: 900px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .hero-text h1 {
+            margin: 0 0 8px;
+            font-size: 24px;
+            line-height: 1.2;
+        }
+
+        @media (min-width: 900px) {
+            .hero-text h1 {
+                font-size: 28px;
+            }
+        }
+
+        .hero-sub {
+            margin: 0 0 10px;
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .hero-list {
+            margin: 0 0 12px;
+            padding-left: 18px;
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        .hero-list li {
+            margin-bottom: 4px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 9px 16px;
+            border-radius: 6px;
+            font-size: 15px;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+        }
+
+        .hero-btn-primary {
+            background-color: var(--accent);
+            color: #ffffff;
+        }
+
+        .hero-btn-primary:hover {
+            background-color: var(--accent-hover);
+        }
+
+        .hero-btn-secondary {
+            background-color: #fffdf0;
+            color: var(--text-main);
+            border: 1px solid var(--border);
+        }
+
+        .hero-btn-secondary:hover {
+            background-color: #fff7d1;
+        }
+
+        .hero-note {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .hero-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .hero-garage-card {
+            background-color: var(--card-bg);
+            border: 1px dashed var(--border);
+            border-radius: 4px;
+            padding: 8px;
+            font-size: 13px;
+        }
+
+        .hero-garage-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .hero-garage-text {
+            color: var(--text-muted);
+            line-height: 1.35;
+        }
+
+        /* Мини‑памятка "как пользоваться" */
+
+        .howto {
+            background-color: #fffdf5;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .howto-inner {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 10px 16px 12px;
+            font-size: 13px;
+            color: var(--text-main);
+        }
+
+        .howto-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .howto-steps {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 16px;
+        }
+
+        .howto-step {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .howto-step-num {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background-color: var(--accent);
+            color: #fff;
+            font-size: 11px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* Основная область */
+
+        .layout {
+            max-width: 1160px;
+            margin: 12px auto 24px;
+            padding: 0 16px;
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 900px) {
+            .layout { grid-template-columns: 1fr; }
+        }
+
+        /* Фильтры слева */
+
+        .sidebar {
+            background-color: var(--card-bg);
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            padding: 12px;
+            font-size: 14px;
+        }
+
+        .sidebar-title { font-weight: 500; margin-bottom: 8px; }
+
+        .filter-block { margin-bottom: 12px; }
+
+        .filter-block label {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .filter-block small {
+            display: block;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .filter-block select,
+        .filter-block input {
+            width: 100%;
+            padding: 6px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        .filter-actions {
+            margin-top: 8px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-main {
+            flex: 1;
+            padding: 8px 0;
+            border-radius: 4px;
+            border: none;
+            background-color: var(--accent);
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            padding: 8px 0;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            background-color: #fff;
+            color: var(--text-main);
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn-main:hover { background-color: var(--accent-hover); }
+
+        .save-status {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        /* Контент справа */
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .content-header-title { font-weight: 500; }
+
+        .sort { color: var(--text-muted); }
+
+        .sort select {
+            border: none;
+            background: transparent;
+            font-size: 14px;
+        }
+
+        /* Список "гаражей / чуланов" */
+
+        .ad-card {
+            background-color: var(--card-bg);
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            padding: 10px;
+            display: grid;
+            grid-template-columns: 140px 1fr 200px;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 900px) {
+            .ad-card {
+                grid-template-columns: 120px 1fr;
+                grid-template-rows: auto auto;
+            }
+            .ad-actions {
+                grid-column: 1 / -1;
+                border-top: 1px solid var(--border);
+                padding-top: 6px;
+                margin-top: 4px;
+            }
+        }
+
+        .ad-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100px;
+            background-color: #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .ad-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .drop-zone {
+            position: absolute;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4px;
+            background-color: rgba(0, 0, 0, 0.35);
+            color: #fff;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .drop-zone input[type="file"] { display: none; }
+
+        .ad-main {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .ad-title {
+            font-weight: 500;
+            margin-bottom: 2px;
+            font-size: 15px;
+        }
+
+        .ad-desc {
+            color: var(--text-muted);
+            font-size: 13px;
+            line-height: 1.3;
+            max-height: 72px;
+            overflow: hidden;
+        }
+
+        .ad-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+
+        .ad-price {
+            font-weight: 700;
+            color: var(--price);
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .ad-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            justify-content: center;
+        }
+
+        .ad-actions a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 9px 4px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .btn-call {
+            border: 1px solid var(--accent);
+            background-color: #ffffff;
+            color: var(--accent);
+        }
+
+        .btn-messenger {
+            border: none;
+            background-color: var(--wa); /* по умолчанию WhatsApp */
+            color: #ffffff;
+        }
+
+        .btn-messenger--wa { background-color: var(--wa); }
+        .btn-messenger--tg { background-color: var(--tg); }
+        .btn-messenger--max { background-color: var(--max); }
+
+        .btn-call:hover { background-color: #f0f6ff; }
+        .btn-messenger:hover { opacity: 0.9; }
+
+        .btn-icon {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+            flex-shrink: 0;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 10px;
+            background-color: #eef3ff;
+            color: var(--accent);
+            font-size: 11px;
+        }
+
+        .ad-contact-note {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+            text-align: center;
+        }
+
+        /* Низ страницы: правила и отказ от ответственности */
+
+        .rules {
+            max-width: 1160px;
+            margin: 0 auto 24px;
+            padding: 0 16px 16px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .rules-box {
+            background-color: #ffffff;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            padding: 10px 12px;
+            line-height: 1.4;
+        }
+
+        .rules-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+            color: var(--text-main);
+        }
+
+        .rules-list {
+            margin: 4px 0 6px;
+            padding-left: 16px;
+        }
+
+        .rules-list li {
+            margin-bottom: 2px;
+        }
+
+        /* Модалка выбора контактов */
+
+        .modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0,0,0,0.45);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-backdrop.active {
+            display: flex;
+        }
+
+        .modal {
+            background-color: #ffffff;
+            border-radius: 6px;
+            padding: 12px 14px;
+            max-width: 380px;
+            width: 100%;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.25);
+            font-size: 13px;
+        }
+
+        .modal-title {
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .modal-row {
+            margin-bottom: 8px;
+        }
+
+        .modal-row label {
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .modal-row input[type="text"],
+        .modal-row input[type="tel"],
+        .modal-row select {
+            width: 100%;
+            padding: 6px 8px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            font-size: 13px;
+        }
+
+        .modal-row small {
+            display: block;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        .modal-checkboxes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .modal-checkboxes label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .modal-btn {
+            padding: 6px 10px;
+            font-size: 13px;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            background-color: #fff;
+            cursor: pointer;
+        }
+
+        .modal-btn-primary {
+            border-color: var(--accent);
+            background-color: #e6f1ff;
+            color: var(--accent);
+        }
+
+        .modal-btn-primary:hover {
+            background-color: #d4e7ff;
+        }
+
+        /* Для автоскролла, чтобы не уезжало под шапку */
+        .ad-card {
+            scroll-margin-top: 80px;
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-inner">
+        <div class="logo">Гаражи и чуланы</div>
+        <div class="city">Блошиный рынок Темрюк и район · beta</div>
+        <form class="search" onsubmit="event.preventDefault();">
+            <input type="text" placeholder="Поиск: гараж, книги, одежда, стройка...">
+            <button type="submit">Найти</button>
+        </form>
+        <div class="top-buttons">
+            <button id="toggle-edit">Редактировать</button>
+            <button id="save-changes">Сохранить</button>
+            <button id="add-item">Добавить гараж/чулан</button>
+        </div>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="hero-inner">
+        <div class="hero-text">
+            <h1>Хлам давит глаз? Выложи его в онлайн‑гараж</h1>
+            <p class="hero-sub">
+                У кого‑то кирпичи после стройки, у кого‑то книги и куртки, у кого‑то просто заваленный балкон.
+                Здесь всё по‑простому: гаражи, чуланы, сараи — как есть, без глянца.
+            </p>
+            <ul class="hero-list">
+                <li>Собираешь всё добро в один «гараж» или «чулан»</li>
+                <li>Пишешь, что готов продать, поменять или отдать</li>
+                <li>Тебе звонят или пишут в мессенджер прямо из карточки</li>
+            </ul>
+            <div class="hero-actions">
+                <a href="#ads-list" class="hero-btn hero-btn-primary">Посмотреть гаражи и чуланы</a>
+                <button type="button" class="hero-btn hero-btn-secondary" id="hero-create">
+                    Создать свой «уголок» (1–2 минуты)
+                </button>
+            </div>
+            <div class="hero-note">
+                Локально: Темрюк и Темрюкский район. Встретились, посмотрели, рассчитались из рук в руки.
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="hero-garage-card">
+                <div class="hero-garage-title">Гараж №12</div>
+                <div class="hero-garage-text">
+                    Кирпичи, мешки смеси, профиль, стремянка.  
+                    «Забирайте всё разом — дешевле, чем по одному таскать с базы».
+                </div>
+            </div>
+            <div class="hero-garage-card">
+                <div class="hero-garage-title">Чулан с книгами №7</div>
+                <div class="hero-garage-text">
+                    Детективы, фантастика, журналы.  
+                    «Меняю стопку книг на настолку или вкусный кофе».
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="howto">
+    <div class="howto-inner">
+        <div class="howto-title">Как пользоваться (для своих)</div>
+        <div class="howto-steps">
+            <div class="howto-step">
+                <span class="howto-step-num">1</span>
+                <span>Нажми «Создать свой уголок» и выбери тип: гараж, чулан, балкон…</span>
+            </div>
+            <div class="howto-step">
+                <span class="howto-step-num">2</span>
+                <span>Укажи телефон и мессенджер — люди смогут сразу писать или звонить.</span>
+            </div>
+            <div class="howto-step">
+                <span class="howto-step-num">3</span>
+                <span>Отредактируй название (можно угарное) и описание хлама — и всё, твой гараж в списке.</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<main class="layout">
+    <!-- Левая колонка: фильтры -->
+    <aside class="sidebar">
+        <div class="sidebar-title">Найти свой хлам</div>
+
+        <div class="filter-block">
+            <label for="place-type">Тип уголка</label>
+            <small>Гараж — стройка/инструменты, чулан — книги и мелочи, балкон — одежда и всё подряд.</small>
+            <select id="place-type">
+                <option>Любой</option>
+                <option>Гараж</option>
+                <option>Чулан</option>
+                <option>Балкон</option>
+                <option>Сарай</option>
+            </select>
+        </div>
+
+        <div class="filter-block">
+            <label for="stuff-type">Что внутри</label>
+            <small>Выбор здесь влияет и на приписку к названию нового гаража.</small>
+            <select id="stuff-type">
+                <option>Всё подряд</option>
+                <option>Стройматериалы</option>
+                <option>Книги и бумага</option>
+                <option>Одежда и обувь</option>
+                <option>Инструмент и техника</option>
+            </select>
+        </div>
+
+        <div class="filter-block">
+            <label for="deal-type">Как отдаёт хозяин</label>
+            <select id="deal-type">
+                <option>Не важно</option>
+                <option>Продажа дёшево</option>
+                <option>Обмен</option>
+                <option>Забрать бесплатно</option>
+                <option>Забрать всё скопом</option>
+            </select>
+        </div>
+
+        <div class="filter-actions">
+            <button class="btn-main" type="button">Показать</button>
+            <button class="btn-secondary" type="button">Сбросить</button>
+        </div>
+        <div class="save-status" id="save-status"></div>
+    </aside>
+
+    <!-- Правая колонка: список "гаражей / чуланов" -->
+    <section class="content" id="ads-list">
+        <div class="content-header">
+            <div class="content-header-title">Гаражи, чуланы, балконы</div>
+            <div class="sort">
+                Сортировать:
+                <select>
+                    <option>сначала свежие</option>
+                    <option>где больше хлама</option>
+                    <option>где отдают дешевле</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Примеры стартовых точек -->
+        <article class="ad-card" data-messenger-type="whatsapp">
+            <div class="ad-image-wrapper">
+                <img src="https://via.placeholder.com/300x200?text=Гараж+%E2%84%9612" alt="Гараж №12">
+                <div class="drop-zone">
+                    Перетащи фото сюда<br>или нажми для выбора
+                    <input type="file" accept="image/*">
+                </div>
+            </div>
+            <div class="ad-main">
+                <div class="ad-title">Гараж №12 — остатки после стройки</div>
+                <div class="ad-desc">
+                    Красный кирпич (примерно 500 шт.), пара мешков смеси, обрезки профиля, куски утеплителя, немного плитки.
+                    Хлам нормальный: сухой, не из болота. Можно по чуть‑чуть, можно весь гараж одним махом.
+                </div>
+                <div class="ad-meta">
+                    <span class="ad-category">Стройматериалы</span>
+                    <span class="ad-location">Темрюкский район</span>
+                    <span class="ad-time">Сегодня, 12:30</span>
+                    <span class="badge">Гараж</span>
+                </div>
+            </div>
+            <div class="ad-actions">
+                <div class="ad-price">Отдам дёшево или всё скопом</div>
+                <a class="btn-call" href="tel:+7XXXXXXXXXX">
+                    <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011-.24 11.36 11.36 0 003.58.57 1 1 0 011 1V21a1 1 0 01-1 1A17.92 17.92 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.24 1z"></path>
+                    </svg>
+                    Позвонить хозяину
+                </a>
+                <a class="btn-messenger btn-messenger--wa" target="_blank"
+                   href="https://wa.me/7XXXXXXXXXX?text=Интересует%20Гараж%20%E2%84%9612%20-%20после%20стройки">
+                    <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M20 11.5A8.5 8.5 0 005.2 4.3 8.5 8.5 0 004.3 18.8L4 21l2.3-.3A8.5 8.5 0 0020 11.5zm-8.5 7a7 7 0 01-3.6-1l-.3-.2-1.8.2.2-1.7-.2-.3a7 7 0 1111.1-5.7 7 7 0 01-7.4 7.7zm3.4-4.4c-.2-.1-1.2-.6-1.4-.7s-.3-.1-.5.1l-.7.8a.4.4 0 01-.4.1 5.7 5.7 0 01-3-2.6.3.3 0 01.1-.4l.3-.3.2-.3a.3.3 0 000-.4L8.7 9a.8.8 0 00-.4-.2H8a1.1 1.1 0 00-.8.4 2.3 2.3 0 00-.7 1.7 4 4 0 00.9 2.1 7.6 7.6 0 002.9 2.6 3.4 3.4 0 001.6.5 1.4 1.4 0 001-.5 1.1 1.1 0 00.2-1 .4.4 0 00-.2-.3z"></path>
+                    </svg>
+                    Написать в WhatsApp
+                </a>
+                <div class="ad-contact-note">Можно звонить и писать в мессенджер. Телефон виден всем.</div>
+            </div>
+        </article>
+
+        <article class="ad-card" data-messenger-type="telegram">
+            <div class="ad-image-wrapper">
+                <img src="https://via.placeholder.com/300x200?text=%D0%A7%D1%83%D0%BB%D0%B0%D0%BD+%D1%81+%D0%BA%D0%BD%D0%B8%D0%B3%D0%B0%D0%BC%D0%B8" alt="Чулан с книгами">
+                <div class="drop-zone">
+                    Перетащи фото сюда<br>или нажми для выбора
+                    <input type="file" accept="image/*">
+                </div>
+            </div>
+            <div class="ad-main">
+                <div class="ad-title">Чулан с книгами №7</div>
+                <div class="ad-desc">
+                    Полки забиты: детективы, фантастика, старые учебники, журналы 90‑х.
+                    Можно выцеплять по одной книжке, а можно приезжать за коробками.
+                    Хочу освободить место — обменяю часть на настолки, кофе или что‑нибудь полезное.
+                </div>
+                <div class="ad-meta">
+                    <span class="ad-category">Книги и бумага</span>
+                    <span class="ad-location">Темрюк</span>
+                    <span class="ad-time">Вчера, 18:10</span>
+                    <span class="badge">Чулан</span>
+                </div>
+            </div>
+            <div class="ad-actions">
+                <div class="ad-price">Дёшево или на обмен</div>
+                <a class="btn-call" href="tel:+7XXXXXXXXXX">
+                    <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011-.24 11.36 11.36 0 003.58.57 1 1 0 011 1V21a1 1 0 01-1 1A17.92 17.92 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.24 1z"></path>
+                    </svg>
+                    Позвонить хозяину
+                </a>
+                <a class="btn-messenger btn-messenger--tg" target="_blank"
+                   href="https://t.me/USERNAME_BOOKS7">
+                    <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M9.04 15.73l-.38 3.37a.9.9 0 001.27.92l2.99-1.4 3.43 2.5a1 1 0 001.58-.64L20.97 4a1 1 0 00-1.34-1.03L3.4 9.54a1 1 0 00.02 1.88l3.7 1.3 8.58-5.37-6.66 7.38z"></path>
+                    </svg>
+                    Написать в Telegram
+                </a>
+                <div class="ad-contact-note">Лучше писать в мессенджер, не всегда беру трубку. Телефон виден всем.</div>
+            </div>
+        </article>
+
+        <article class="ad-card" data-messenger-type="max">
+            <div class="ad-image-wrapper">
+                <img src="https://via.placeholder.com/300x200?text=%D0%91%D0%B0%D0%BB%D0%BA%D0%BE%D0%BD+%D1%81+%D0%BE%D0%B4%D0%B5%D0%B6%D0%B4%D0%BE%D0%B9" alt="Балкон с одеждой">
+                <div class="drop-zone">
+                    Перетащи фото сюда<br>или нажми для выбора
+                    <input type="file" accept="image/*">
+                </div>
+            </div>
+            <div class="ad-main">
+                <div class="ad-title">Балкон с одеждой №3</div>
+                <div class="ad-desc">
+                    Куртки, джинсы, обувь, немного детских вещичек. Состояние разное, но не тряпьё:
+                    что‑то «на каждый день», что‑то на дачу. Забирайте пакетами — по одной штуке играться не хочется.
+                </div>
+                <div class="ad-meta">
+                    <span class="ad-category">Одежда и обувь</span>
+                    <span class="ad-location">Темрюкский район</span>
+                    <span class="ad-time">3 часа назад</span>
+                    <span class="badge">Балкон</span>
+                </div>
+            </div>
+            <div class="ad-actions">
+                <div class="ad-price">Пакетами, дёшево или в обмен</div>
+                <a class="btn-call" href="tel:+7XXXXXXXXXX">
+                    <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011-.24 11.36 11.36 0 003.58.57 1 1 0 011 1V21a1 1 0 01-1 1A17.92 17.92 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.24 1z"></path>
+                    </svg>
+                    Позвонить хозяину
+                </a>
+                <a class="btn-messenger btn-messenger--max" target="_blank"
+                   href="https://max.me/7XXXXXXXXXX">
+                    <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 5a2 2 0 012-2h12a2 2 0 012 2v11.5a1.5 1.5 0 01-2.45 1.1L15 14.5l-4.55 3.1A1.5 1.5 0 019 18.5V14l-3.55 3.1A1.5 1.5 0 014 15.5V5z"></path>
+                    </svg>
+                    Написать в MAX
+                </a>
+                <div class="ad-contact-note">Можно звонить и писать. Телефон лучше сначала спрашивать в личке.</div>
+            </div>
+        </article>
+    </section>
+</main>
+
+<!-- Блок с правилами и отказом от ответственности -->
+<section class="rules">
+    <div class="rules-box">
+        <div class="rules-title">Важно: что здесь нельзя продавать и кто за что отвечает</div>
+        <ul class="rules-list">
+            <li>Нельзя выкладывать оружие, боеприпасы, взрывчатку.</li>
+            <li>Нельзя выкладывать наркотики, «химию» и любые запрещённые вещества.</li>
+            <li>Нельзя выкладывать поддельные документы, справки, права, печати и т.п.</li>
+            <li>Нельзя выкладывать украденные вещи и то, на что у вас нет прав.</li>
+        </ul>
+        <p>
+            Всё, что вы выкладываете в свой гараж/чулан, — ваша личная ответственность.  
+            Сайт — это только доска объявлений. Мы не проверяем каждую вещь, не участвуем в сделках
+            и не отвечаем за то, что и как продают или меняют пользователи [web:211][web:213].
+        </p>
+        <p>
+            Договаривайтесь с людьми с головой: встречайтесь в людных местах, не отправляйте предоплату незнакомцам,
+            проверяйте вещи на месте перед расчётом.
+        </p>
+    </div>
+</section>
+
+<!-- Модальное окно выбора контактов -->
+<div class="modal-backdrop" id="contact-modal">
+    <div class="modal">
+        <div class="modal-title">Как с вами связаться?</div>
+
+        <div class="modal-row">
+            <label for="place-type-select">Что за уголок</label>
+            <select id="place-type-select">
+                <option value="Гараж">Гараж</option>
+                <option value="Чулан">Чулан</option>
+                <option value="Балкон">Балкон</option>
+                <option value="Сарай">Сарай</option>
+                <option value="Уголок">Уголок</option>
+            </select>
+            <small>Не переживай: название потом можно переписать.</small>
+        </div>
+
+        <div class="modal-row">
+            <label>Как называть уголок</label>
+            <div class="modal-checkboxes">
+                <label><input type="radio" name="title-style" value="soft" checked> Строго, по‑людски</label>
+                <label><input type="radio" name="title-style" value="hard"> Угарно, с приколами</label>
+            </div>
+        </div>
+
+        <div class="modal-row">
+            <label for="phone-input">Телефон</label>
+            <input type="tel" id="phone-input" placeholder="+7XXXXXXXXXX">
+            <small>Без телефона можно жить, но звонить тебе не смогут — только писать, если укажешь мессенджер.</small>
+        </div>
+
+        <div class="modal-row">
+            <label>Мессенджер</label>
+            <div class="modal-checkboxes">
+                <label><input type="radio" name="messenger-type" value="none" checked> Без мессенджера</label>
+                <label><input type="radio" name="messenger-type" value="whatsapp"> WhatsApp</label>
+                <label><input type="radio" name="messenger-type" value="telegram"> Telegram</label>
+                <label><input type="radio" name="messenger-type" value="max"> MAX</label>
+            </div>
+        </div>
+
+        <div class="modal-row" id="tg-row" style="display:none;">
+            <label for="tg-input">Ник в Telegram (без @)</label>
+            <input type="text" id="tg-input" placeholder="username">
+        </div>
+
+        <div class="modal-row">
+            <label>Как удобнее связываться</label>
+            <div class="modal-checkboxes">
+                <label><input type="radio" name="contact-mode" value="both" checked> Можно звонить и писать</label>
+                <label><input type="radio" name="contact-mode" value="call"> Только звонки</label>
+                <label><input type="radio" name="contact-mode" value="msg"> Только писать в мессенджер</label>
+            </div>
+        </div>
+
+        <div class="modal-row">
+            <label>Показывать телефон</label>
+            <div class="modal-checkboxes">
+                <label><input type="radio" name="phone-visibility" value="public" checked> Показывать телефон всем</label>
+                <label><input type="radio" name="phone-visibility" value="hidden"> Лучше спрашивать в личке</label>
+            </div>
+        </div>
+
+        <div class="modal-actions">
+            <button type="button" class="modal-btn" id="modal-cancel">Отмена</button>
+            <button type="button" class="modal-btn modal-btn-primary" id="modal-ok">Продолжить</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const editBtn = document.getElementById('toggle-edit');
+    const saveBtn = document.getElementById('save-changes');
+    const addBtn = document.getElementById('add-item');
+    const heroCreateBtn = document.getElementById('hero-create');
+    const saveStatus = document.getElementById('save-status');
+    const adsList = document.getElementById('ads-list');
+
+    const contactModal = document.getElementById('contact-modal');
+    const placeTypeSelect = document.getElementById('place-type-select');
+    const phoneInput = document.getElementById('phone-input');
+    const tgRow = document.getElementById('tg-row');
+    const tgInput = document.getElementById('tg-input');
+    const modalCancel = document.getElementById('modal-cancel');
+    const modalOk = document.getElementById('modal-ok');
+    const messengerTypeInputs = document.getElementsByName('messenger-type');
+    const contactModeInputs = document.getElementsByName('contact-mode');
+    const phoneVisibilityInputs = document.getElementsByName('phone-visibility');
+    const titleStyleInputs = document.getElementsByName('title-style');
+
+    // селект "что внутри" слева — для приписки в названии
+    const stuffTypeSelect = document.getElementById('stuff-type');
+
+    let editMode = false;
+    let createdCount = parseInt(localStorage.getItem('garazhi_chulany_created_count') || '0', 10) || 0;
+
+    function setEditMode(on) {
+        editMode = on;
+        document.querySelectorAll('.ad-title, .ad-desc, .ad-price').forEach(el => {
+            el.setAttribute('contenteditable', on ? 'true' : 'false');
+            el.style.outline = on ? '1px dashed #2a8cff' : 'none';
+            el.style.backgroundColor = on ? '#fffef3' : 'transparent';
+        });
+        document.querySelectorAll('.ad-image-wrapper').forEach(wrapper => {
+            const dropZone = wrapper.querySelector('.drop-zone');
+            if (dropZone) dropZone.style.display = on ? 'flex' : 'none';
+        });
+        editBtn.textContent = on ? 'Готово' : 'Редактировать';
+    }
+
+    function initImageEditors() {
+        document.querySelectorAll('.ad-image-wrapper').forEach(wrapper => {
+            const img = wrapper.querySelector('img');
+            const dropZone = wrapper.querySelector('.drop-zone');
+            if (!img || !dropZone) return;
+
+            dropZone.addEventListener('click', () => {
+                const fileInput = dropZone.querySelector('input[type="file"]');
+                if (fileInput) fileInput.click();
+            });
+
+            dropZone.addEventListener('dragover', e => {
+                e.preventDefault();
+                dropZone.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+            });
+
+            dropZone.addEventListener('dragleave', e => {
+                e.preventDefault();
+                dropZone.style.backgroundColor = 'rgba(0, 0, 0, 0.35)';
+            });
+
+            dropZone.addEventListener('drop', e => {
+                e.preventDefault();
+                dropZone.style.backgroundColor = 'rgba(0, 0, 0, 0.35)';
+                const file = e.dataTransfer.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = ev => { img.src = ev.target.result; };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            const fileInput = dropZone.querySelector('input[type="file"]');
+            if (fileInput) {
+                fileInput.addEventListener('change', e => {
+                    const file = e.target.files[0];
+                    if (file && file.type.startsWith('image/')) {
+                        const reader = new FileReader();
+                        reader.onload = ev => { img.src = ev.target.result; };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+        });
+    }
+
+    function collectData() {
+        const items = [];
+        document.querySelectorAll('.ad-card').forEach(card => {
+            const messengerBtn = card.querySelector('.btn-messenger');
+            let messengerType = card.dataset.messengerType || '';
+            if (!messengerType && messengerBtn) {
+                if (messengerBtn.classList.contains('btn-messenger--wa')) messengerType = 'whatsapp';
+                else if (messengerBtn.classList.contains('btn-messenger--tg')) messengerType = 'telegram';
+                else if (messengerBtn.classList.contains('btn-messenger--max')) messengerType = 'max';
+            }
+            items.push({
+                title: card.querySelector('.ad-title')?.innerText.trim() || '',
+                desc: card.querySelector('.ad-desc')?.innerText.trim() || '',
+                price: card.querySelector('.ad-price')?.innerText.trim() || '',
+                category: card.querySelector('.ad-category')?.innerText.trim() || '',
+                location: card.querySelector('.ad-location')?.innerText.trim() || '',
+                time: card.querySelector('.ad-time')?.innerText.trim() || '',
+                img: card.querySelector('img')?.getAttribute('src') || '',
+                callLink: card.querySelector('.btn-call')?.getAttribute('href') || '',
+                messengerLink: messengerBtn ? messengerBtn.getAttribute('href') : '',
+                messengerLabel: messengerBtn ? messengerBtn.innerText.trim() : '',
+                messengerType: messengerType,
+                contactNote: card.querySelector('.ad-contact-note')?.innerText.trim() || ''
+            });
+        });
+        return items;
+    }
+
+    function saveToLocal() {
+        try {
+            const data = collectData();
+            localStorage.setItem('garazhi_chulany_items', JSON.stringify(data));
+            localStorage.setItem('garazhi_chulany_created_count', String(createdCount));
+            saveStatus.textContent = 'Сохранено (в этом браузере).';
+            setTimeout(() => saveStatus.textContent = '', 3000);
+        } catch (e) {
+            console.error(e);
+            saveStatus.textContent = 'Ошибка сохранения.';
+        }
+    }
+
+    function renderFromData(data) {
+        document.querySelectorAll('.ad-card').forEach(c => c.remove());
+        data.forEach(item => {
+            const card = document.createElement('article');
+            card.className = 'ad-card';
+            card.dataset.messengerType = item.messengerType || '';
+            const messengerClass =
+                item.messengerType === 'telegram' ? 'btn-messenger--tg' :
+                item.messengerType === 'max' ? 'btn-messenger--max' :
+                item.messengerType === 'whatsapp' ? 'btn-messenger--wa' : '';
+            card.innerHTML = `
+                <div class="ad-image-wrapper">
+                    <img src="${item.img || 'https://via.placeholder.com/300x200?text=%D0%A4%D0%BE%D1%82%D0%BE'}" alt="Фото уголка">
+                    <div class="drop-zone">
+                        Перетащи фото сюда<br>или нажми для выбора
+                        <input type="file" accept="image/*">
+                    </div>
+                </div>
+                <div class="ad-main">
+                    <div class="ad-title">${item.title || 'Новый гараж/чулан'}</div>
+                    <div class="ad-desc">${item.desc || 'Кратко опиши, что у тебя за хлам и как готов отдавать.'}</div>
+                    <div class="ad-meta">
+                        <span class="ad-category">${item.category || 'Всё подряд'}</span>
+                        <span class="ad-location">${item.location || 'Темрюкский район'}</span>
+                        <span class="ad-time">${item.time || 'Сегодня'}</span>
+                        <span class="badge">Гараж/чулан</span>
+                    </div>
+                </div>
+                <div class="ad-actions">
+                    <div class="ad-price">${item.price || 'Продажа / обмен / забрать скопом'}</div>
+                    <a class="btn-call" href="${item.callLink || 'tel:+7XXXXXXXXXX'}">
+                        <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011-.24 11.36 11.36 0 003.58.57 1 1 0 011 1V21a1 1 0 01-1 1A17.92 17.92 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.58 1 1 0 01-.24 1z"></path>
+                        </svg>
+                        Позвонить владельцу
+                    </a>
+                    ${item.messengerLink ? `
+                    <a class="btn-messenger ${messengerClass}" target="_blank" href="${item.messengerLink}">
+                        <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="M4 5a2 2 0 012-2h12a2 2 0 012 2v11.5a1.5 1.5 0 01-2.45 1.1L15 14.5l-4.55 3.1A1.5 1.5 0 019 18.5V14l-3.55 3.1A1.5 1.5 0 014 15.5V5z"></path>
+                        </svg>
+                        ${item.messengerLabel || 'Написать в мессенджер'}
+                    </a>` : ''}
+                    ${item.contactNote ? `
+                    <div class="ad-contact-note">${item.contactNote}</div>
+                    ` : ''}
+                </div>
+            `;
+            adsList.appendChild(card);
+        });
+        initImageEditors();
+    }
+
+    function loadFromLocal() {
+        try {
+            const raw = localStorage.getItem('garazhi_chulany_items');
+            if (!raw) return;
+            const data = JSON.parse(raw);
+            if (!Array.isArray(data)) return;
+            renderFromData(data);
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+    function openContactModal() {
+        placeTypeSelect.value = 'Гараж';
+        phoneInput.value = '';
+        tgInput.value = '';
+        messengerTypeInputs.forEach?.(i => i.value === 'none' ? i.checked = true : null);
+        contactModeInputs.forEach?.(i => i.value === 'both' ? i.checked = true : null);
+        phoneVisibilityInputs.forEach?.(i => i.value === 'public' ? i.checked = true : null);
+        titleStyleInputs.forEach?.(i => i.value === 'soft' ? i.checked = true : null);
+        tgRow.style.display = 'none';
+        contactModal.classList.add('active');
+    }
+
+    function closeContactModal() {
+        contactModal.classList.remove('active');
+    }
+
+    messengerTypeInputs.forEach?.(input => {
+        input.addEventListener('change', () => {
+            if (input.value === 'telegram' && input.checked) {
+                tgRow.style.display = 'block';
+            } else if (input.checked) {
+                tgRow.style.display = 'none';
+            }
+        });
+    });
+
+    function randomFrom(list) {
+        return list[Math.floor(Math.random() * list.length)];
+    }
+
+    function generateFunnyTitle(placeType, stuffText, mode) {
+        const lowerPlace = placeType.toLowerCase();
+        const stuff = (stuffText || '').toLowerCase();
+
+        const softGarage = [
+            'НЕВРИТОВЫЙ гараж',
+            'Честный гараж',
+            'Легендарный гараж',
+            'Спокойный гараж хозяина'
+        ];
+
+        const hardGarage = [
+            'Гараж последнего босса',
+            'Гараж выживальщика',
+            'Гараж после развода',
+            'Гараж «я это точно когда‑нибудь пригодится»'
+        ];
+
+        const softChulan = [
+            'Чулан гномов',
+            'Чулан хранителя хлама',
+            'Чулан тихого коллекционера'
+        ];
+
+        const hardChulan = [
+            'Чулан бывшего',
+            'Чулан последней надежды',
+            'Чулан «не заходи без проводника»'
+        ];
+
+        const softBalkon = [
+            'Балкон свободной души',
+            'Балкон вечного ремонта'
+        ];
+
+        const hardBalkon = [
+            'Балкон апокалипсиса',
+            'Балкон «ДЖЕГА ХЭЗ НОУ ЛИМИТ»'
+        ];
+
+        const softSarai = [
+            'Сарай воспоминаний',
+            'Сарай всевозможностей'
+        ];
+
+        const hardSarai = [
+            'Сарай босса финального уровня',
+            'Сарай «не открывать после полуночи»'
+        ];
+
+        let base;
+        const hard = mode === 'hard';
+
+        if (lowerPlace === 'гараж') {
+            base = hard ? randomFrom(hardGarage) : randomFrom(softGarage);
+        } else if (lowerPlace === 'чулан') {
+            base = hard ? randomFrom(hardChulan) : randomFrom(softChulan);
+        } else if (lowerPlace === 'балкон') {
+            base = hard ? randomFrom(hardBalkon) : randomFrom(softBalkon);
+        } else if (lowerPlace === 'сарай') {
+            base = hard ? randomFrom(hardSarai) : randomFrom(softSarai);
+        } else {
+            base = hard ? 'Уголок тёмных сил' : 'Уголок сюрпризов';
+        }
+
+        let tail = '';
+        if (stuff.includes('строй')) tail = ' со стройматериалами';
+        else if (stuff.includes('книг') || stuff.includes('бумаг')) tail = ' с книгами и бумагой';
+        else if (stuff.includes('одежд') || stuff.includes('обув')) tail = ' с одеждой и обувью';
+        else if (stuff.includes('инструмент') || stuff.includes('техник')) tail = ' с инструментом и железками';
+
+        return base + tail;
+    }
+
+    function addNewItemWithContacts() {
+        const phone = phoneInput.value.trim();
+        const placeType = placeTypeSelect.value || 'Гараж';
+        const stuffText = stuffTypeSelect ? stuffTypeSelect.options[stuffTypeSelect.selectedIndex].text : '';
+
+        let titleMode = 'soft';
+        titleStyleInputs.forEach?.(input => {
+            if (input.checked) titleMode = input.value;
+        });
+
+        const autoTitle = generateFunnyTitle(placeType, stuffText, titleMode);
+
+        let callLink = '';
+        if (phone) {
+            callLink = `tel:${phone.replace(/[^+\d]/g, '')}`;
+        }
+
+        // мессенджер
+        let messengerType = 'none';
+        messengerTypeInputs.forEach?.(input => {
+            if (input.checked) messengerType = input.value;
+        });
+
+        let messengerLink = '';
+        let messengerLabel = '';
+
+        if (messengerType === 'whatsapp' && phone) {
+            const digits = phone.replace(/[^0-9]/g, '');
+            const waNumber = digits.startsWith('7') || digits.startsWith('8')
+                ? '7' + digits.slice(-10)
+                : digits;
+            messengerLink = `https://wa.me/${waNumber}?text=Интересует%20ваш%20гараж%2Fчулан`;
+            messengerLabel = 'Написать в WhatsApp';
+        } else if (messengerType === 'telegram') {
+            const tgName = tgInput.value.trim();
+            if (tgName) {
+                const cleanName = tgName.replace(/^@/, '');
+                messengerLink = `https://t.me/${cleanName}`;
+                messengerLabel = 'Написать в Telegram';
+            }
+        } else if (messengerType === 'max' && phone) {
+            const digits = phone.replace(/[^0-9]/g, '');
+            messengerLink = `https://max.me/${digits}`;
+            messengerLabel = 'Написать в MAX';
+        }
+
+        // режим связи
+        let contactMode = 'both';
+        contactModeInputs.forEach?.(input => {
+            if (input.checked) contactMode = input.value;
+        });
+
+        // видимость телефона
+        let phoneVisibility = 'public';
+        phoneVisibilityInputs.forEach?.(input => {
+            if (input.checked) phoneVisibility = input.value;
+        });
+
+        let contactNoteParts = [];
+
+        if (contactMode === 'both') {
+            contactNoteParts.push('Можно звонить и писать в мессенджер.');
+        } else if (contactMode === 'call') {
+            contactNoteParts.push('Предпочитаю только звонки.');
+        } else if (contactMode === 'msg') {
+            contactNoteParts.push('Лучше писать, не всегда беру трубку.');
+        }
+
+        if (phoneVisibility === 'public') {
+            contactNoteParts.push('Телефон виден всем.');
+        } else {
+            contactNoteParts.push('Телефон лучше сначала спрашивать в личке.');
+        }
+
+        const contactNote = contactNoteParts.join(' ');
+
+        const current = collectData();
+        current.push({
+            title: autoTitle,
+            desc: 'Например: кирпичи, доски, коробки с книгами или одеждой — отдам дёшево или на обмен.',
+            price: 'Напиши: продаю дёшево / обмен / забрать скопом',
+            category: stuffText || 'Всё подряд',
+            location: 'Темрюкский район',
+            time: 'Сегодня',
+            img: '',
+            callLink: callLink || 'tel:+7XXXXXXXXXX',
+            messengerLink,
+            messengerLabel,
+            messengerType,
+            contactNote
+        });
+        renderFromData(current);
+
+        // увеличиваем счётчик созданных гаражей и сохраняем
+        createdCount += 1;
+        localStorage.setItem('garazhi_chulany_created_count', String(createdCount));
+
+        // включаем режим редактирования и скроллим к новому гаражу
+        setEditMode(true);
+        const cards = document.querySelectorAll('.ad-card');
+        const lastCard = cards[cards.length - 1];
+        if (lastCard && lastCard.scrollIntoView) {
+            lastCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        loadFromLocal();
+        initImageEditors();
+        setEditMode(false);
+
+        editBtn.addEventListener('click', () => setEditMode(!editMode));
+        saveBtn.addEventListener('click', saveToLocal);
+
+        addBtn.addEventListener('click', openContactModal);
+        if (heroCreateBtn) {
+            heroCreateBtn.addEventListener('click', openContactModal);
+        }
+
+        modalCancel.addEventListener('click', () => {
+            closeContactModal();
+        });
+
+        modalOk.addEventListener('click', () => {
+            addNewItemWithContacts();
+            closeContactModal();
+        });
+
+        contactModal.addEventListener('click', (e) => {
+            if (e.target === contactModal) {
+                closeContactModal();
+            }
+        });
+
+        // для отладки/аналитики: можно посмотреть в консоли или отдельным текстом,
+        // сколько гаражей создавали в этом браузере
+        console.log('Создано гаражей в этом браузере:', createdCount);
+    });
+</script>
+
+</body>
+</html>
